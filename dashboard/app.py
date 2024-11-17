@@ -7,7 +7,7 @@ from shiny import App, Inputs, Outputs, Session, reactive, render, ui
 
 sns.set_theme(style="white")
 df = pd.read_csv(Path(__file__).parent / "penguins.csv", na_values="NA")
-species = ["Adelie", "Gentoo", "Chinstrap"]
+ta_indicators = ["SMA", "MACD", "RSI"]
 
 
 def make_value_box(penguin):
@@ -18,19 +18,15 @@ def make_value_box(penguin):
 
 app_ui = ui.page_sidebar(
     ui.sidebar(
-        ui.input_slider(
-            "mass",
-            "Mass",
-            2000,
-            6000,
-            3400,
-        ),
-        ui.input_checkbox_group(
-            "analysis", "Filter by species", species, selected=species
+        ui.input_select(
+            "ta",
+            "Technical Analysis Indicators",
+            ta_indicators,
+            selected=ta_indicators[0],  # Default to the first species
         ),
     ),
     ui.layout_columns(
-        *[make_value_box(penguin) for penguin in species],
+
     ),
     ui.layout_columns(
         ui.card(
